@@ -1,4 +1,4 @@
-const data = [{
+const objDataImage = [{
         "albumId": 1,
         "id": 1,
         "title": "accusamus beatae ad facilis cum similique qui sunt",

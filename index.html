@@ -20,7 +20,7 @@
             <div class="flex items-center border-b-2 py-2">
                 <input class=" text-2xl w-full  mr-3 py-1 px-2 leading-tight outline-none hover:bg-blue-100  " type="text" placeholder="Image search here" v-model="search" v-on:input="searchingImage">
             </div>
-            <div v-if="!minSearhing()">
+            <div v-if="!minSearching()">
                 <h2 class="w-full text-center text-red-600 text-lg italic">minimal 3 huruf</h2>
             </div>
 
@@ -57,7 +57,7 @@
         data() {
             return {
                 search: "",
-                resources: data,
+                resources: objDataImage,
                 imageList: [],
                 searching: false,
 
@@ -65,7 +65,7 @@
         },
 
         methods: {
-            minSearhing: function() {
+            minSearching: function() {
                 if (this.search.length != 0 && this.search.length < 3) {
                     return false
                 } else {
@@ -73,10 +73,10 @@
                 }
             },
             searchingImage: async function(e) {
-                if (this.minSearhing) {
+                if (this.minSearching) {
                     this.searching = true;
                     await this.waitingForSearch(1000);
-                    this.imageList = this.resources.imageList((data) =>
+                    this.imageList = this.resources.filter((data) =>
                         data.title.startsWith(this.search)
                     );
                     this.searching = false;
