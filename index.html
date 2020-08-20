@@ -73,7 +73,7 @@
                 }
             },
             searchingImage: async function(e) {
-                if (this.minSearching) {
+                if (this.minSearching()) {
                     this.searching = true;
                     await this.waitingForSearch(1000);
                     this.imageList = this.resources.filter((data) =>
@@ -89,7 +89,6 @@
                 return new Promise((resolve) => setTimeout(resolve, time));
             },
         },
-
         created() {
             this.searchingImage();
         },
