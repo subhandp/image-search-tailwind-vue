@@ -24,8 +24,7 @@
                 <h2 class="w-full text-center text-red-600 text-lg italic">minimal 3 huruf</h2>
             </div>
 
-            <div v-if="searching" class="text-lg ">Searching...</div>
-            <div v-if="imageList.length == 0" class="text-lg ">Sorry, Image not found</div>
+            <div class="text-lg ">{{processFeedback}}</div>
             <template>
                 <div class="flex  w-full h-auto p-2 mt-4 " >
                    
@@ -59,11 +58,19 @@
                 search: "",
                 resources: objDataImage,
                 imageList: [],
-                searching: false,
+                searching: false
 
             };
         },
-
+        computed: {
+            processFeedback: function() {
+                if (!this.searching && this.imageList.length <= 0) {
+                    return "Sorry, Your image not found.";
+                } else if (this.searching) {
+                    return "Searching, wait for second...";
+                }
+            }
+        },
         methods: {
             minSearching: function() {
                 if (this.search.length != 0 && this.search.length < 3) {
