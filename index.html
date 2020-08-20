@@ -18,10 +18,10 @@
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
               </svg>
             <div class="flex items-center border-b-2 py-2">
-                <input class=" text-2xl w-full  mr-3 py-1 px-2 leading-tight outline-none hover:bg-blue-100  " type="text" placeholder="Image search here" v-model="search" v-on:input="searchingImage">
+                <input class=" text-2xl w-full  mr-3 py-1 px-2 leading-tight outline-none hover:bg-blue-100  " type="text" placeholder="Image search here" v-model="search">
             </div>
             <div v-if="!minSearching()">
-                <h2 class="w-full text-center text-red-600 text-lg italic">minimal 3 huruf</h2>
+                <h2 class="w-full text-center text-red-600 text-lg italic">Sorry, minimal 3 character for searching</h2>
             </div>
 
             <div class="text-lg ">{{processFeedback}}</div>
@@ -71,15 +71,9 @@
                 }
             }
         },
-        methods: {
-            minSearching: function() {
-                if (this.search.length != 0 && this.search.length < 3) {
-                    return false
-                } else {
-                    return true;
-                }
-            },
-            searchingImage: async function(e) {
+        watch: {
+            //uncoment kode dibawah jika menggunakan method untuk pencarian
+            search: async function(val) {
                 if (this.minSearching()) {
                     this.searching = true;
                     await this.waitingForSearch(1000);
@@ -91,13 +85,40 @@
                     this.searching = false;
                     this.imageList = this.resources;
                 }
+            }
+
+        },
+        methods: {
+            minSearching: function() {
+                if (this.search.length != 0 && this.search.length < 3) {
+                    return false
+                } else {
+                    return true;
+                }
             },
+            //uncoment kode dibawah jika menggunakan method untuk pencarian
+            /*searchingImage: async function(e) { 
+                if (this.minSearching()) {
+                    this.searching = true;
+                    await this.waitingForSearch(1000);
+                    this.imageList = this.resources.filter((data) =>
+                        data.title.startsWith(this.search)
+                    );
+                    this.searching = false;
+                } else {
+                    this.searching = false;
+                    this.imageList = this.resources;
+                }
+            },*/
             waitingForSearch: async function(time) {
                 return new Promise((resolve) => setTimeout(resolve, time));
             },
         },
         created() {
-            this.searchingImage();
+            //uncoment kode dibawah jika menggunakan watch untuk pencarian
+            this.imageList = this.resources;
+            //uncoment kode dibawah jika menggunakan method untuk pencarian
+            // this.minSearching();
         },
     });
 </script>
